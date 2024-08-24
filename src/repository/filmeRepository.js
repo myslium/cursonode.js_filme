@@ -15,5 +15,25 @@ export default async function salvarFilme(filme) {
     let idFilme = info.insertId;
     return idFilme;
 
-    
+
+}
+
+export async function consultarFilme(nome) {
+
+    let comando = `
+       SELECT id_filme        id,
+	   nm_filme               nome, 
+	   ds_sinopse             sinopse,
+       vl_avaliacao           avaliacao,
+       dt_lancamento          lancamento,
+       bt_disponivel          disponivel
+    FROM tb_filmes
+    WHERE nm_filme like ?
+    `
+
+    let resposta = await con.query(comando, ['%' + nome + '%']);
+    let registros = resposta[0];
+
+    return registros;
+
 }
